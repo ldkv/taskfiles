@@ -6,7 +6,7 @@ dotenv:
 
 includes:
   all-collections:
-    taskfile: "https://github.com/ldkv/taskfiles.git//taskfile-all.yml?ref=v1"
+    taskfile: "https://github.com/ldkv/taskfiles.git//taskfile-all.yml?ref=refs/tags/v1"
     dir: .
     flatten: true
 
@@ -42,3 +42,5 @@ tasks:
       - |
         MAJOR_TAG=$(echo "{{.version}}" | cut -d. -f1)
         echo "Updating major tag $MAJOR_TAG to latest version {{.version}}..."
+        git tag -f $MAJOR_TAG {{.version}}
+        git push origin $MAJOR_TAG --force

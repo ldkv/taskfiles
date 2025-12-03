@@ -24,11 +24,11 @@ To include these remote Taskfiles, add the following section into your own `Task
 ```yaml
 includes:
   all-collections:
-    taskfile: "https://github.com/ldkv/taskfiles.git//taskfile-all.yml?ref=v1"
+    taskfile: "https://github.com/ldkv/taskfiles.git//taskfile-all.yml?ref=refs/tags/v1"
     dir: .
     flatten: true
   python-collection:
-    taskfile: "https://github.com/ldkv/taskfiles.git//python/python.yml?ref=v1"
+    taskfile: "https://github.com/ldkv/taskfiles.git//python/python.yml?ref=refs/tags/v1"
     dir: .
 ```
 
@@ -69,3 +69,11 @@ export TASK_REMOTE_DIR="$HOME/.cache/taskfiles"
 ```
 
 Add this line to your shell profile (e.g., `~/.bashrc` or `~/.zshrc`) to make it permanent.
+
+### Force Re-fetching Remote Taskfiles
+
+To force re-fetching remote Taskfiles, regardless of the cache expiry setting, run:
+
+```shell
+task --download
+```
