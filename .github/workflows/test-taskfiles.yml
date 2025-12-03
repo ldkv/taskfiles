@@ -22,4 +22,4 @@ jobs:
       - name: Install Task
         uses: go-task/setup-task@v1
       - name: Test Taskfiles
-        run: task test-taskfiles
+        run: task test-taskfiles -y
