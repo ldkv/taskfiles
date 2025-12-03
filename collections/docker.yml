@@ -1,7 +1,10 @@
 version: "3"
 
 vars:
-  # Use CLI_ARGS if present, otherwise fall back to DOCKER_SERVICES env var, then empty string
+  # Allow overriding the compose file via task variable, defaults to docker-compose.yml
+  # Example usage: task docker up file=docker-compose.dev.yml
+  compose_file: '{{.file | default "docker-compose.yml"}}'
+  # Allow to select specific services via CLI_ARGS or DOCKER_SERVICES env var. Empty means all services.
   # Example usage: task docker up --services db redis api
   services: '{{.CLI_ARGS | default .DOCKER_SERVICES | default ""}}'
 
@@ -10,17 +13,17 @@ tasks:
     desc: Stop all services
     dir: "{{.USER_WORKING_DIR}}"
     cmds:
-      - docker compose -f docker-compose.yml down
+      - docker compose -f {{.compose_file}} down
 
   up:
     desc: Build and run selected services
     dir: "{{.USER_WORKING_DIR}}"
     deps: [down]
     cmds:
-      - "docker compose -f docker-compose.yml up -d --build {{.services}}"
+      - "docker compose -f {{.compose_file}} up -d --build {{.services}}"
 
   build:
     desc: Build docker images for all services
     dir: "{{.USER_WORKING_DIR}}"
     cmds:
-      - docker compose -f docker-compose.yml build {{.services}}
+      - docker compose -f {{.compose_file}} build {{.services}}
