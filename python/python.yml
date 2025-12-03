@@ -1,0 +1,11 @@
+version: "3"
+
+includes:
+  python-setup:
+    taskfile: ./setup.yml
+    dir: .
+    flatten: true
+  python-checks:
+    taskfile: ./checks.yml
+    dir: .
+    flatten: true

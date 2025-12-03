@@ -1,0 +1,30 @@
+version: "3"
+
+tasks:
+  install-uv:
+    desc: Install uv if not found
+    status:
+      - uv -V
+    cmds:
+      - echo "uv not found, installing..."
+      - curl -LsSf https://astral.sh/uv/install.sh | sh
+      - source $HOME/.cargo/env
+
+  tree:
+    desc: Show the project dependency tree with outdated packages and sizes
+    dir: "{{.USER_WORKING_DIR}}"
+    cmds:
+      - uv tree --outdated --show-sizes
+
+  dev-install:
+    desc: Install all dependencies including dev, extras
+    dir: "{{.USER_WORKING_DIR}}"
+    deps: [install-uv]
+    cmds:
+      - uv venv --clear
+      - uv sync
+
+  oneshot-setup:
+    desc: Run one-shot setup tasks
+    dir: "{{.USER_WORKING_DIR}}"
+    deps: [dev-install]
