@@ -1,0 +1,38 @@
+version: "3"
+
+vars:
+  DJANGO_MANAGE: uv run python manage.py
+
+tasks:
+  manage:
+    desc: Execute Django management commands
+    dir: "{{.USER_WORKING_DIR}}"
+    preconditions:
+      - sh: '[ -n "{{.CLI_ARGS}}" ]'
+        msg: "Usage: task manage -- <command> [options...]"
+    cmds:
+      - "{{.DJANGO_MANAGE}} {{.CLI_ARGS}}"
+
+  migrations:
+    desc: Generate Django migrations
+    dir: "{{.USER_WORKING_DIR}}"
+    cmds:
+      - "{{.DJANGO_MANAGE}} makemigrations"
+
+  migrations-check:
+    desc: Verify latest Django migrations are up to date
+    dir: "{{.USER_WORKING_DIR}}"
+    cmds:
+      - "{{.DJANGO_MANAGE}} makemigrations --noinput --check"
+
+  migrate:
+    desc: Apply Django migrations
+    dir: "{{.USER_WORKING_DIR}}"
+    cmds:
+      - "{{.DJANGO_MANAGE}} migrate{{if .CLI_ARGS}} {{.CLI_ARGS}}{{end}}"
+
+  collectstatic:
+    desc: Collect static files
+    dir: "{{.USER_WORKING_DIR}}"
+    cmds:
+      - "{{.DJANGO_MANAGE}} collectstatic --noinput"

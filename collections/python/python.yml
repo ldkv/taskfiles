@@ -9,3 +9,7 @@ includes:
     taskfile: ./checks.yml
     dir: .
     flatten: true
+  python-django:
+    taskfile: ./django.yml
+    dir: .
+    flatten: true
