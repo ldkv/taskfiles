@@ -1,0 +1,65 @@
+version: "3"
+
+tasks:
+  deps-check:
+    desc: Check the dependencies are up to date
+    dir: "{{.USER_WORKING_DIR}}"
+    cmds:
+      - uv lock --check
+
+  format-check:
+    desc: Verify code formatting
+    dir: "{{.USER_WORKING_DIR}}"
+    cmds:
+      - uv run ruff format --check .
+
+  format:
+    desc: Format code
+    dir: "{{.USER_WORKING_DIR}}"
+    cmds:
+      - uv run ruff format .
+
+  lint-check:
+    desc: Verify code linting
+    dir: "{{.USER_WORKING_DIR}}"
+    cmds:
+      - uv run ruff check .
+
+  lint-fix:
+    desc: Apply linting fixes to codebase - use with caution
+    dir: "{{.USER_WORKING_DIR}}"
+    cmds:
+      - uv run ruff check --fix .
+
+  type-check:
+    desc: Run the type checker, in order if available => mypy > pyrefly > ty
+    silent: true
+    dir: "{{.USER_WORKING_DIR}}"
+    cmds:
+      - |
+        if uv run mypy --version >/dev/null 2>&1; then
+          uv run mypy .
+        elif uv run pyrefly --version >/dev/null 2>&1; then
+          uv run pyrefly check .
+        elif uv run ty --version >/dev/null 2>&1; then
+          uv run ty check .
+        else
+          echo "No type checker found"
+          exit 1
+        fi
+
+  code-quality:
+    desc: Run the linters and static type checker
+    dir: "{{.USER_WORKING_DIR}}"
+    deps: [format-check, lint-check, type-check]
+
+  test:
+    desc: Run the tests in local environment
+    dir: "{{.USER_WORKING_DIR}}"
+    cmds:
+      - uv run pytest .
+
+  check-all:
+    desc: Run all checks and tests
+    dir: "{{.USER_WORKING_DIR}}"
+    deps: [deps-check, code-quality, test]
