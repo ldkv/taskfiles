@@ -1,0 +1,12 @@
+[project]
+name = "mock-package"
+version = "0.1.0"
+description = "Mock Python package to test GitHub Actions"
+requires-python = ">=3.13"
+dependencies = []
+
+[dependency-groups]
+dev = ["pyrefly>=0.43.1", "pytest>=9.0.1", "ruff>=0.14.6"]
+
+[tool.uv]
+package = true
