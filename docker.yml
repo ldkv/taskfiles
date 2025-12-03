@@ -1,0 +1,23 @@
+version: "3"
+
+vars:
+  # Use CLI_ARGS if present, otherwise fall back to DOCKER_SERVICES env var, then empty string
+  # Example usage: task docker up --services db redis api
+  services: '{{.CLI_ARGS | default .DOCKER_SERVICES | default ""}}'
+
+tasks:
+  down:
+    desc: Stop all services
+    cmds:
+      - docker compose -f docker-compose.yml down
+
+  up:
+    desc: Build and run selected services
+    deps: [down]
+    cmds:
+      - "docker compose -f docker-compose.yml up -d --build {{.services}}"
+
+  build:
+    desc: Build docker images for all services
+    cmds:
+      - docker compose -f docker-compose.yml build {{.services}}
