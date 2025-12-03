@@ -17,7 +17,7 @@ A collection of Taskfiles for Python projects.
 - [`setup.yml`](./collections/python/setup.yml): Tasks for setting up Python development environments.
 - [`checks.yml`](./collections/python/checks.yml): Tasks for checking code quality and dependencies.
 
-### [docker-collection](./collections/docker/docker.yml)
+### [docker-collection](./collections/docker.yml)
 
 A collection of commands for Docker and docker-compose.
 
