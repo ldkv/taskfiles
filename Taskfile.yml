@@ -1,0 +1,44 @@
+# Dedicated Taskfile for this repo only
+version: "3"
+
+dotenv:
+  - .env
+
+includes:
+  all-collections:
+    taskfile: "https://github.com/ldkv/taskfiles.git//taskfile-all.yml?ref=v1"
+    dir: .
+    flatten: true
+
+tasks:
+  test-taskfiles:
+    desc: Test taskfiles
+    dir: ./tests/fixtures/python-app
+    cmds:
+      - task help
+      - task dir
+      - task oneshot-setup
+      - task check-all
+
+  release:
+    desc: Release a new version via github CLI
+    silent: true
+    preconditions:
+      - sh: '[ -n "{{.version}}" ] && [[ {{.version}} =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ ]]'
+        msg: "version variable must be in the format vX.Y.Z. Usage: task release version=v1.2.3"
+    cmds:
+      - echo "Releasing version {{.version}}..."
+      - gh release create "{{.version}}" --generate-notes
+      - task update-major-tag version="{{.version}}"
+
+  update-major-tag:
+    desc: Update a new major version tag
+    silent: true
+    preconditions:
+      - sh: '[ -n "{{.version}}" ] && [[ {{.version}} =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ ]]'
+        msg: "version variable must be in the format vX.Y.Z. Usage: task release version=v1.2.3"
+    cmds:
+      - git fetch --tags
+      - |
+        MAJOR_TAG=$(echo "{{.version}}" | cut -d. -f1)
+        echo "Updating major tag $MAJOR_TAG to latest version {{.version}}..."
