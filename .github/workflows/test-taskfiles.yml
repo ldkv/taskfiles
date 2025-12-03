@@ -6,12 +6,12 @@ on:
       - "main"
     paths:
       - ".github/workflows/test-taskfiles.yml"
-      - "taskfiles/**"
+      - "collections/**"
       - "Taskfile.yml"
   pull_request:
     paths:
       - ".github/workflows/test-taskfiles.yml"
-      - "taskfiles/**"
+      - "collections/**"
       - "Taskfile.yml"
 
 jobs:

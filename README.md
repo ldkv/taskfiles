@@ -1,19 +1,23 @@
+![tests](https://github.com/ldkv/taskfiles/actions/workflows/test-taskfiles.yml/badge.svg?branch=main)
+
 # taskfiles
 
 ## Overview
 
-A collection of useful [Taskfiles](https://taskfile.dev/). All commands are included in [taskfile-all.yml](./taskfile-all.yml) for easy inclusion in your own projects using the [Remote Taskfiles](https://taskfile.dev/docs/experiments/remote-taskfiles) feature.
+A collection of useful [Taskfiles](https://taskfile.dev/) that can be included in your own projects using the [Remote Taskfiles](https://taskfile.dev/docs/experiments/remote-taskfiles) feature.
 
-It is also possible to include individual Taskfiles as needed.
+All commands are included in [all.yml](./collections/all.yml) for easy inclusion in your own projects
 
-### [python-collection](./python/python.yml)
+It is also possible to include individual collections as needed.
+
+### [python-collection](./collections/python/python.yml)
 
 A collection of Taskfiles for Python projects.
 
-- [`setup.yml`](./python/setup.yml): Tasks for setting up Python development environments.
-- [`checks.yml`](./python/checks.yml): Tasks for checking code quality and dependencies.
+- [`setup.yml`](./collections/python/setup.yml): Tasks for setting up Python development environments.
+- [`checks.yml`](./collections/python/checks.yml): Tasks for checking code quality and dependencies.
 
-### [docker-collection](./docker/docker.yml)
+### [docker-collection](./collections/docker/docker.yml)
 
 A collection of commands for Docker and docker-compose.
 
@@ -23,12 +27,12 @@ To include these remote Taskfiles, add the following section into your own `Task
 
 ```yaml
 includes:
-  all-collections:
-    taskfile: "https://github.com/ldkv/taskfiles.git//taskfile-all.yml?ref=refs/tags/v1"
+  all-collections: # For all available tasks
+    taskfile: "https://github.com/ldkv/taskfiles.git//collections/all.yml?ref=refs/tags/v1"
     dir: .
     flatten: true
-  python-collection:
-    taskfile: "https://github.com/ldkv/taskfiles.git//python/python.yml?ref=refs/tags/v1"
+  python-collection: # For only Python-related tasks
+    taskfile: "https://github.com/ldkv/taskfiles.git//collections/python/python.yml?ref=refs/tags/v1"
     dir: .
 ```
 
