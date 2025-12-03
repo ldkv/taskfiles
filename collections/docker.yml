@@ -8,16 +8,19 @@ vars:
 tasks:
   down:
     desc: Stop all services
+    dir: "{{.USER_WORKING_DIR}}"
     cmds:
       - docker compose -f docker-compose.yml down
 
   up:
     desc: Build and run selected services
+    dir: "{{.USER_WORKING_DIR}}"
     deps: [down]
     cmds:
       - "docker compose -f docker-compose.yml up -d --build {{.services}}"
 
   build:
     desc: Build docker images for all services
+    dir: "{{.USER_WORKING_DIR}}"
     cmds:
       - docker compose -f docker-compose.yml build {{.services}}
