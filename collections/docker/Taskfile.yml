@@ -2,10 +2,10 @@ version: "3"
 
 vars:
   # Allow overriding the compose file via task variable, defaults to docker-compose.yml
-  # Example usage: task docker up file=docker-compose.dev.yml
+  # Example usage: task up file=docker-compose.dev.yml
   compose_file: '{{.file | default "docker-compose.yml"}}'
   # Allow to select specific services via CLI_ARGS or DOCKER_SERVICES env var. Empty means all services.
-  # Example usage: task docker up --services db redis api
+  # Example usage: task up file=docker-compose.dev.yml -- db redis api
   services: '{{.CLI_ARGS | default .DOCKER_SERVICES | default ""}}'
 
 tasks:

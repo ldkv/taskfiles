@@ -1,12 +1,12 @@
 version: "3"
 
 includes:
-  python-collection:
-    taskfile: ./python/python.yml
+  python:
+    taskfile: ./python/Taskfile.yml
     dir: .
     flatten: true
   docker:
-    taskfile: ./docker.yml
+    taskfile: ./docker/Taskfile.yml
     dir: .
     flatten: true
 
@@ -20,10 +20,10 @@ tasks:
     cmds:
       - task --list-all
 
-  dir:
+  info:
     desc: show directories variables defined in Taskfile
     silent: true
     cmds:
-      - echo "Root {{.ROOT_DIR}}"
-      - echo "Current {{.TASKFILE_DIR}}"
-      - echo "Working {{.USER_WORKING_DIR}}"
+      - echo "Root Taskfile dir = {{.ROOT_DIR}}"
+      - echo "Taskfile containing 'info' command = {{.TASKFILE_DIR}}"
+      - echo "Current working dir = {{.USER_WORKING_DIR}}"

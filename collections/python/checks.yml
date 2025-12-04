@@ -1,7 +1,7 @@
 version: "3"
 
 tasks:
-  deps-check:
+  dependencies-check:
     desc: Check the dependencies are up to date
     dir: "{{.USER_WORKING_DIR}}"
     cmds:
@@ -32,7 +32,7 @@ tasks:
       - uv run ruff check --fix .
 
   type-check:
-    desc: Run the type checker, in order if available => mypy > pyrefly > ty
+    desc: Run the type checker, using mypy if available, otherwise pyrefly
     silent: true
     dir: "{{.USER_WORKING_DIR}}"
     cmds:
@@ -41,8 +41,6 @@ tasks:
           uv run mypy .
         elif uv run pyrefly --version >/dev/null 2>&1; then
           uv run pyrefly check .
-        elif uv run ty --version >/dev/null 2>&1; then
-          uv run ty check .
         else
           echo "No type checker found"
           exit 1
@@ -62,4 +60,4 @@ tasks:
   check-all:
     desc: Run all checks and tests
     dir: "{{.USER_WORKING_DIR}}"
-    deps: [deps-check, code-quality, test]
+    deps: [dependencies-check, code-quality, test]

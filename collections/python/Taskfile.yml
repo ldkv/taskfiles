@@ -1,15 +1,15 @@
 version: "3"
 
 includes:
-  python-setup:
+  setup:
     taskfile: ./setup.yml
     dir: .
     flatten: true
-  python-checks:
+  checks:
     taskfile: ./checks.yml
     dir: .
     flatten: true
-  python-django:
+  django:
     taskfile: ./django.yml
     dir: .
     flatten: true

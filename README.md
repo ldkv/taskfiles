@@ -29,11 +29,11 @@ To include these remote Taskfiles, add the following section into your own `Task
 ```yaml
 includes:
   all-collections: # For all available tasks
-    taskfile: "https://github.com/ldkv/taskfiles.git//collections/all.yml?ref=refs/tags/v1"
+    taskfile: "https://github.com/ldkv/taskfiles.git//collections/Taskfile.yml?ref=refs/tags/v1"
     dir: .
     flatten: true
   python-collection: # For only Python-related tasks
-    taskfile: "https://github.com/ldkv/taskfiles.git//collections/python/python.yml?ref=refs/tags/v1"
+    taskfile: "https://github.com/ldkv/taskfiles.git//collections/python/Taskfile.yml?ref=refs/tags/v1"
     dir: .
 ```
 

@@ -20,7 +20,7 @@ tasks:
       - "{{.DJANGO_MANAGE}} makemigrations"
 
   migrations-check:
-    desc: Verify latest Django migrations are up to date
+    desc: Check for unmade model migrations
     dir: "{{.USER_WORKING_DIR}}"
     cmds:
       - "{{.DJANGO_MANAGE}} makemigrations --noinput --check"
